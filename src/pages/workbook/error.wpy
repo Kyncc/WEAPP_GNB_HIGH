@@ -1,0 +1,122 @@
+<style lang="less" scoped>
+.zan-btn {
+  border-radius:0;
+}
+.footer{
+  position:fixed;
+  bottom: 0px;
+  left:0;
+  width:100%;
+  padding: 15px 0;
+  background: #F9F9F9;
+  .zan-btn {
+    border-radius:5px;
+  }
+}
+</style>
+
+<template>
+  <view class="container">
+    <scroll-view scroll-y="true" style="height: 100%;padding-bottom:70px;" scroll-with-animation="true" enable-back-to-top="true">
+      <repeat for="{{error}}" key="index" index="index" item="item">
+        <view class="zan-panel">
+          <view class="zan-cell" style="padding: 5px 0" bindtap='_preview({{item.errorImg.url}})'>
+            <image mode="aspectFit" style="width:100%;height:{{ item.errorImg.height/4 }}px" src="{{item.errorImg.url}}?mageMogr2/auto-orient/thumbnail/750x/format/jpg/interlace/1/blur/1x0/quality/100|imageslim" lazy-load="true"/>
+          </view>
+          <view class="zan-cell zan-font-12" style="padding: 10px 15px">
+            <view class="zan-cell__bd zan-row" style="color:#3fc6c6">
+              <view class="zan-col zan-col-10">{{item.name}}</view>
+              <view class="zan-col zan-col-10">下载：{{item.downNum}}</view>
+            </view>
+          </view>
+        </view>
+      </repeat>
+    </scroll-view>
+    <view class="footer">
+      <view class="zan-row">
+        <button class="zan-col zan-col-16 zan-col-offset-4 zan-btn zan-btn--primary" bindtap='_download'>
+          <image mode="aspectFit" style="width:24px;height:24px;top:6px;position:relative;" src="../../common/resources/icon_download.png"/>
+          下载{{error.length}}道错题
+        </button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class WorkbookError extends wepy.page {
+    data = {
+      error: [],
+      downloadUrl: '',
+      id: ''
+    }
+
+    methods = {
+      /** 查看大图 */
+      _preview (url) {
+        wepy.previewImage({current: `${url}-primaryError`, urls: this.imgs})
+      },
+      _download () {
+        // 不是会员跳转到VIP购买, 是跳转到下载
+        if (Number(wepy.getStorageSync('gnb_high_user').vip)) {
+          wepy.navigateTo({
+            url: `/pages/my/email?id=${this.id}&type=workbook`
+          })
+        } else {
+          wepy.navigateTo({
+            url: `/pages/my/vip`
+          })
+        }
+      }
+    }
+
+    computed = {
+      /** 图片集 */
+      imgs () {
+        let urls = []
+        for (let img of this.error) {
+          urls.push(`${img.errorImg.url}-primaryError`)
+        }
+        return urls
+      }
+    }
+
+    /** 获取错题数据 */
+    _getChapter (id) {
+      return new Promise((resolve, reject) => {
+        wepy.request({
+          url: 'https://mid.guinaben.com/v2/workbook/chapter/error',
+          data: {
+            chapterId: id
+          },
+          success (res) {
+            resolve(res)
+          },
+          fail (err) {
+            reject(err)
+          }
+        })
+      })
+    }
+
+    async onLoad(options) {
+      wx.setNavigationBarTitle({title: options.name})
+      this.id = options.id
+      this.error = await this._getChapter(this.id)
+      this.$apply()
+    }
+
+    onShareAppMessage (res) {
+      if (res.from === 'button') {
+        console.log(res.target)
+      }
+      return {
+        title: '各位家长：这样记错题，速度快、好处多',
+        imageUrl: 'http://img.guinaben.com/gnb_miniprogram_share.jpg?imageView2/0/q/75|imageslim',
+        path: '/pages/workbook/index'
+      }
+    }
+  }
+</script>
