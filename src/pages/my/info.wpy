@@ -27,8 +27,6 @@
   import wepy from 'wepy'
   import zanField from '@/components/zan-field'
 
-  const gradeList = ['七年级', '八年级']
-
   export default class MyInfo extends wepy.page {
     config = {
       navigationBarTitleText: '个人资料'
@@ -41,8 +39,6 @@
     }
 
     data = {
-      // gradeIndex: Number(wepy.getStorageSync('gnb_high_user').grade) - 7,
-      gradeList: gradeList,
       base_school: {
         title: '学校',
         value: wepy.getStorageSync('gnb_high_user').school,

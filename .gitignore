@@ -1,5 +1,6 @@
 .DS_Store
 .vscode
+.wepycache
 dist/
 node_modules/
 npm-debug.log
