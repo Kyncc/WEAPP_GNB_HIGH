@@ -11,8 +11,9 @@
   "author": "Hope",
   "license": "MIT",
   "dependencies": {
-    "wepy": "^1.7.0",
-    "wepy-async-function": "^1.4.4"
+    "wepy": "^1.7.1",
+    "wepy-async-function": "^1.4.4",
+    "wepy-cli": "^1.7.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
