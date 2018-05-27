@@ -9,12 +9,12 @@
      <view class="zan-panel" style="margin: 40rpx 0;">
        <nameField :options.sync="base_name" componentId="nameField"/>
        <!-- <sexField :options="base_sex"  componentId="sexField"/> -->
-       <view class="zan-cell">
+       <!-- <view class="zan-cell">
         <view class="zan-cell__hd zan-field__title zan-font-16">年级</view>
         <picker disabled="true" class="zan-cell__bd" style="font-size: 14px;" bindchange="bindGradeChange" value="{{gradeIndex}}" range="{{gradeList}}">
           {{gradeList[gradeIndex]}}
         </picker>
-       </view>
+       </view> -->
        <schoolField :options.sync="base_school" componentId="schoolField"/>
      </view>
      <view class="zan-row" style="margin-top:20px;">
@@ -41,7 +41,7 @@
     }
 
     data = {
-      gradeIndex: Number(wepy.getStorageSync('gnb_high_user').grade) - 7,
+      // gradeIndex: Number(wepy.getStorageSync('gnb_high_user').grade) - 7,
       gradeList: gradeList,
       base_school: {
         title: '学校',
@@ -78,7 +78,6 @@
       },
       async _save () {
         let user = {
-          grade: Number(this.gradeIndex) + 7,
           name: this.base_name.value,
           school: this.base_school.value
         }
@@ -102,7 +101,7 @@
           url: 'https://small.guinaben.com/v2/member/infoEdit',
           method: 'POST',
           data: {
-            grade: user.grade,
+            grade: '10',
             name: user.name,
             school: user.school
           },
@@ -122,7 +121,7 @@
     onShow () {
       this.base_name.value = wepy.getStorageSync('gnb_high_user').name
       this.base_school.value = wepy.getStorageSync('gnb_high_user').school
-      this.gradeIndex = Number(wepy.getStorageSync('gnb_high_user').grade) - 7
+      // this.gradeIndex = Number(wepy.getStorageSync('gnb_high_user').grade) - 7
       this.$apply()
     }
 

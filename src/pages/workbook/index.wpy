@@ -117,7 +117,7 @@ export default class Statistics extends wepy.page {
         url: 'https://wechat.guinaben.com/mini-program/openId',
         data: {
           code: code,
-          app: 'middle'
+          app: 'senior'
         },
         success (res) {
           wepy.setStorageSync('gnb_high_openId', res.openid)
