@@ -23,7 +23,13 @@
 
 <template>
   <view class="container paperIndex">
-    <gnbTextbookSelect :value.sync="textbook" @event.user="textbookChange" :textbook.sync="textBookList"/>
+    <picker style="margin-top: 0" class="zan-panel" bindchange="textbookChange" range="{{ textBookList }}" value="{{ textbookIndex }}" range-key="name">
+      <view class="picker zan-cell">
+        人教A版:　{{textBookList[textbookIndex].name}}
+        <view class="zan-arrow"></view>
+      </view>
+    </picker>
+    <!-- <gnbTextbookSelect :value.sync="textbook" @event.user="textbookChange" :textbook.sync="textBookList"/> -->
     <!--成品试卷-->
     <view class="zan-panel card" bindtap="_intoPage(chengPin)">
       <view class="zan-card">
@@ -118,6 +124,7 @@
 
     data = {
       textBookList: [],
+      textbookIndex: 0,
       textbook: '',
       list: {
         layer: {
@@ -145,14 +152,14 @@
 
     methods = {
       _intoPage (value) {
-        wepy.navigateTo({url: `/pages/paper/${value}?textbookId=${wepy.getStorageSync('gnb_high_user').textbookId}`})
+        wepy.navigateTo({url: `/pages/paper/${value}?textbookId=${this.textBookList[this.textbookIndex].id}`})
       },
 
-      async textbookChange (id) {
+      async textbookChange (e) {
+        console.log(e.detail.value)
         try {
-          let userinfo = await this._setUserInfo(id)
-          wepy.setStorageSync('gnb_high_user', userinfo)
-          this.list = await this._getPaper(id)
+          this.textbookIndex = e.detail.value
+          this.list = await this._getPaper(this.textBookList[this.textbookIndex].id)
           this.$apply()
         } catch (error) {
           console.log(error)
@@ -196,8 +203,8 @@
     }
 
     async onShow() {
-      this.textBookList = wepy.getStorageSync('gnb_high_user').textbook
-      this.textbook = wepy.getStorageSync('gnb_high_user').textbookId
+      this.textBookList = wepy.getStorageSync('gnb_high_user').otherTextbook
+      this.textbook = this.textBookList[this.textbookIndex].id
       this.list = await this._getPaper(this.textbook)
       this.$apply()
     }
