@@ -50,7 +50,7 @@
         </view>
       </view>
     </view>
-    <!--专题汇编-->
+    <!--专题汇编
     <view class="zan-panel card" bindtap="_intoPage(zhuanTi)">
       <view class="zan-card">
         <view class="zan-card__thumb">
@@ -69,7 +69,7 @@
           </view>
         </view>
       </view>
-    </view>
+    </view>-->
     <!--分层练习
     <view class="zan-panel card" bindtap="_intoPage(fenCeng)">
       <view class="zan-card">
