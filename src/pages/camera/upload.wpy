@@ -1,0 +1,128 @@
+<template>
+  <view class="container">
+    <view class="zan-panel" style="padding:15px;margin-top:0;">
+      <view class="zan-row" style="padding:10px 0;">
+        <view class="zan-col zan-col-6">
+          <image style="width:100%;height:120px;" src="{{file ? file : '../../common/resources/workbookBorder.png'}}" bindtap="_chooseImage('first')"/>
+        </view>
+      </view>
+    </view>
+    <view class="zan-row" style="padding:20px 0">
+      <view class="zan-col zan-col-20 zan-col-offset-2 zan-center">
+        <button class="zan-btn zan-btn--primary" bindtap="_upload">
+          <image style="height:22px;width:22px;position: relative;top:5px;" src="../../common/resources/gou.png"/>提交
+        </button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class CameraUpload extends wepy.page {
+    config = {
+      navigationBarTitleText: '上传'
+    }
+
+    data = {
+      file: []
+    }
+
+    methods = {
+      // 点击选择按钮
+      _chooseImage (type) {
+        let self = this
+        wepy.chooseImage({
+          sizeType: ['original', 'compressed'],
+          sourceType: ['album', 'camera'],
+          count: 1,
+          success (res) {
+            self._uploadFile(res.tempFilePaths[0]).then((res) => {
+              self.file = res
+              self.$apply()
+            })
+          }
+        })
+      },
+      // 上传按钮的事件
+      async _upload () {
+        if (this.file) {
+          wepy.showModal({
+            title: '提示',
+            content: '请上传正确的封面',
+            showCancel: false,
+            confirmText: '确定'
+          })
+        } else {
+          await this._uploadImage(this.file)
+          wepy.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      }
+    }
+
+    /** 上传错题 */
+    _uploadImage (file) {
+      wepy.showLoading({title: '请稍候'})
+      return new Promise((resolve, reject) => {
+        wepy.uploadFile({
+          url: 'https://small.guinaben.com/v2/upload/img',
+          filePath: file,
+          name: 'file',
+          header: {
+            'Content-Type': 'multipart/form-data',
+            'openId': wepy.getStorageSync('gnb_high_openId')
+          },
+          formData: {
+            'type': 'wantworkbook'
+          },
+          success (res) {
+            resolve(JSON.parse(res.data).data.url)
+          },
+          fail (err) {
+            console.log(err)
+            reject(err)
+          },
+          complete () {
+            wepy.hideLoading()
+          }
+        })
+      })
+    }
+
+    /** 获取章节数据 */
+    _upload (file) {
+      wepy.showLoading({title: '请稍候'})
+      return new Promise((resolve, reject) => {
+        wepy.request({
+          url: 'https://small.guinaben.com/v2/workbook/want',
+          method: 'POST',
+          data: {
+            file: file
+          },
+          success (res) {
+            resolve(res)
+          },
+          fail (err) {
+            reject(err)
+          },
+          complete () {
+            wepy.hideLoading()
+          }
+        })
+      })
+    }
+
+    onShareAppMessage (res) {
+      return {
+        title: '各位家长：这样记错题，速度快、好处多',
+        imageUrl: 'http://img.guinaben.com/gnb_miniprogram_share.jpg?imageView2/0/q/75|imageslim',
+        path: '/pages/workbook/index'
+      }
+    }
+  }
+</script>

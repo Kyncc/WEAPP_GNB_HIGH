@@ -32,32 +32,6 @@
         <text class="zan-arrow"></text>
       </navigator>
     </view>
-    <view class="zan-panel">
-      <view class="zan-font-16 zan-cell" bindtap="_into('/pages/my/pay')" style="padding:5px 15px 15px">
-        <view class="zan-cell__bd">
-          <image src='../../common/resources/icon_vip.png' style="width:28px;height:28px;position:relative;top:8px;margin-right:5px;" mode='scaleToFill'/>
-          <text>我的会员</text>
-        </view>
-      </view>
-      <view class="zan-font-16 zan-cell" bindtap="_into('/pages/my/version')" style="padding:5px 15px 15px">
-        <view class="zan-cell__bd">
-          <image src='../../common/resources/icon_version.png' style="width:28px;height:28px;position:relative;top:8px;margin-right:5px;" mode='scaleToFill'/>
-          <text>教材版本</text>
-        </view>
-      </view>
-      <view class="zan-font-16 zan-cell" bindtap="_into('/pages/my/classes')" style="padding:5px 15px 15px">
-        <view class="zan-cell__bd">
-          <image src='../../common/resources/icon_class.png' style="width:28px;height:28px;position:relative;top:8px;margin-right:5px;" mode='scaleToFill'/>
-          <text>我的班级</text>
-        </view>
-      </view>
-    </view>
-    <!-- <view class="zan-center footer" bindtap="_copy">
-      <p class="zan-font-14">
-        <image src='../../common/resources/icon_right.png' style="width:23px;height:23px;" mode='scaleToFill'/>
-        有问题？搜公众号guinaben3456(点我复制)
-      </p>
-    </view> -->
   </view>
 </template>
 
@@ -78,18 +52,6 @@
     }
 
     methods = {
-      // 复制公众号码
-      _copy () {
-        wepy.setClipboardData({
-          data: 'guinaben3456',
-          success (res) {
-            wepy.showToast({
-              title: '复制成功!',
-              icon: 'none'
-            })
-          }
-        })
-      },
       _into (url) {
         wx.navigateTo({
           url: url

@@ -8,13 +8,6 @@
   <view class="container">
      <view class="zan-panel" style="margin: 40rpx 0;">
        <nameField :options.sync="base_name" componentId="nameField"/>
-       <!-- <sexField :options="base_sex"  componentId="sexField"/> -->
-       <!-- <view class="zan-cell">
-        <view class="zan-cell__hd zan-field__title zan-font-16">年级</view>
-        <picker disabled="true" class="zan-cell__bd" style="font-size: 14px;" bindchange="bindGradeChange" value="{{gradeIndex}}" range="{{gradeList}}">
-          {{gradeList[gradeIndex]}}
-        </picker>
-       </view> -->
        <schoolField :options.sync="base_school" componentId="schoolField"/>
      </view>
      <view class="zan-row" style="margin-top:20px;">
@@ -48,11 +41,6 @@
         title: '姓名',
         value: wepy.getStorageSync('gnb_high_user').name,
         placeholder: '请输入您的姓名'
-      },
-      base_sex: {
-        title: '性别',
-        value: (Number(wepy.getStorageSync('gnb_high_user').sex) === 1 ? '男' : '女'),
-        disabled: true
       }
     }
 
@@ -117,14 +105,10 @@
     onShow () {
       this.base_name.value = wepy.getStorageSync('gnb_high_user').name
       this.base_school.value = wepy.getStorageSync('gnb_high_user').school
-      // this.gradeIndex = Number(wepy.getStorageSync('gnb_high_user').grade) - 7
       this.$apply()
     }
 
     onShareAppMessage (res) {
-      if (res.from === 'button') {
-        console.log(res.target)
-      }
       return {
         title: '各位家长：这样记错题，速度快、好处多',
         imageUrl: 'http://img.guinaben.com/gnb_miniprogram_share.jpg?imageView2/0/q/75|imageslim',

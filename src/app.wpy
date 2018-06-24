@@ -51,13 +51,15 @@ export default class extends wepy.app {
     pages: [
       'pages/workbook/index',
       'pages/init/entry',
-      'pages/init/twice',
+      'pages/camera/history',
+      'pages/camera/upload',
       'pages/my/index',
       'pages/my/vip',
       'pages/my/classes',
       'pages/my/info',
       'pages/my/pay',
       'pages/my/email',
+      'pages/my/version',
       'pages/workbook/add',
       'pages/workbook/want',
       'pages/workbook/error',
@@ -110,8 +112,8 @@ export default class extends wepy.app {
       navigationBarTextStyle: 'black'
     },
     networkTimeout: {
-      request: 8000,
-      downloadFile: 8000
+      request: 6000,
+      downloadFile: 6000
     }
   }
 

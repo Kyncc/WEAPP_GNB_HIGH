@@ -15,7 +15,6 @@
         <text class="zan-c-black zan-font-30">￥0.99/天</text>
         <text class="zan-c-gray zan-font-14 del">￥5.9</text>
       </view>
-      <!-- <view style="padding:5px 0"><text class="zan-c-gray-dark zan-font-22">首次支付30天内无理由全额退款</text></view> -->
     </view>
     <view class="footer" style="margin-top: 20px;">
       <view class="zan-row">
@@ -117,9 +116,6 @@
     }
 
     onShareAppMessage (res) {
-      if (res.from === 'button') {
-        console.log(res.target)
-      }
       return {
         title: '各位家长：这样记错题，速度快、好处多',
         imageUrl: 'http://img.guinaben.com/gnb_miniprogram_share.jpg?imageView2/0/q/75|imageslim',

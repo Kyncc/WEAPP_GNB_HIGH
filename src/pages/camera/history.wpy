@@ -2,17 +2,6 @@
 .zan-btn {
   border-radius:0;
 }
-.footer{
-  position:fixed;
-  bottom: 0px;
-  left:0;
-  width:100%;
-  padding: 15px 0;
-  background: #F9F9F9;
-  .zan-btn {
-    border-radius:5px;
-  }
-}
 </style>
 
 <template>
@@ -25,31 +14,22 @@
           </view>
           <view class="zan-cell zan-font-12" style="padding: 10px 15px">
             <view class="zan-cell__bd zan-row" style="color:#3fc6c6">
-              <view class="zan-col zan-col-10">{{item.name}}</view>
-              <view class="zan-col zan-col-10">下载：{{item.downNum}}</view>
+              <view class="zan-col zan-col-10">{{item.date}}</view>
+              <view class="zan-col zan-col-10"></view>
             </view>
           </view>
         </view>
       </repeat>
     </scroll-view>
-    <view class="footer">
-      <view class="zan-row">
-        <button class="zan-col zan-col-16 zan-col-offset-4 zan-btn zan-btn--primary" bindtap='_download'>
-          <image mode="aspectFit" style="width:24px;height:24px;top:6px;position:relative;" src="../../common/resources/icon_download.png"/>
-          下载{{error.length}}道错题
-        </button>
-      </view>
-    </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
 
-  export default class WorkbookError extends wepy.page {
+  export default class CameraHistory extends wepy.page {
     data = {
       error: [],
-      downloadUrl: '',
       id: ''
     }
 
@@ -57,18 +37,6 @@
       /** 查看大图 */
       _preview (url) {
         wepy.previewImage({current: `${url}-primaryError`, urls: this.imgs})
-      },
-      _download () {
-        // 不是会员跳转到VIP购买, 是跳转到下载
-        if (Number(wepy.getStorageSync('gnb_high_user').vip)) {
-          wepy.navigateTo({
-            url: `/pages/my/email?id=${this.id}&type=workbook`
-          })
-        } else {
-          wepy.navigateTo({
-            url: `/pages/my/vip`
-          })
-        }
       }
     }
 
@@ -84,10 +52,10 @@
     }
 
     /** 获取错题数据 */
-    _getChapter (id) {
+    _getCamera (id) {
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/workbook/chapter/error',
+          url: 'https://api.guinaben.com/camera/list',
           data: {
             chapterId: id
           },
@@ -102,9 +70,8 @@
     }
 
     async onLoad(options) {
-      wx.setNavigationBarTitle({title: options.name})
       this.id = options.id
-      this.error = await this._getChapter(this.id)
+      this.error = await this._getCamera(this.id)
       this.$apply()
     }
 
