@@ -11,8 +11,8 @@
 }
 .add_button {
   position: fixed;
-  height: 120rpx;
-  width: 120rpx;
+  height: 100rpx;
+  width: 100rpx;
   bottom: 5%;
   right: 5%;
 }
@@ -42,15 +42,16 @@
               </view>
             </view>
           </repeat>
-          <view class="zan-card" bindtap="_intoChapter({{item}})">
-            <!--练习册图片-->
+          <view class="zan-card" bindtap="_initCamera()">
             <view class="zan-card__thumb">
-              <image class="zan-card__img" src="../../common/resources/workbookBorder.png" mode="aspectFit" lazy-load='true'/>
+              <image class="zan-card__img" src="../../common/resources/camera.png" mode="aspectFit" lazy-load='true'/>
             </view>
-            <!--练习册详情-->
             <view class="zan-card__detail">
               <view class="zan-card__detail-row">
-                <view class="zan-card__left-col zan-c-gray zan-font-16" style="color:#3FC6C6;margin: 8rpx 0 12rpx;">拍错题</view>
+                <view class="zan-card__left-col zan-font-16" style="margin: 36rpx 0 12rpx;">拍错题</view>
+              </view>
+              <view class="zan-card__detail-row zan-c-gray-darker">
+                <view class="zan-card__left-col zan-font-14" style="margin-bottom: 10rpx;">我是文案</view>
               </view>
             </view>
           </view>
@@ -64,6 +65,7 @@
 <script>
 import wepy from 'wepy'
 import gnbTextbookSelect from '@/components/gnb-textbookSelect'
+import gnbSubjectChange from '@/components/gnb-subjectSelect'
 
 export default class Statistics extends wepy.page {
   config = {
@@ -71,7 +73,8 @@ export default class Statistics extends wepy.page {
   }
 
   components = {
-    gnbTextbookSelect: gnbTextbookSelect
+    gnbTextbookSelect: gnbTextbookSelect,
+    gnbSubjectChange: gnbSubjectChange
   }
 
   data = {
@@ -99,6 +102,12 @@ export default class Statistics extends wepy.page {
     _initAdd () {
       wepy.navigateTo({
         url: `/pages/workbook/add?id=${wepy.getStorageSync('gnb_high_user').textbookId}`
+      })
+    },
+    /** 进入拍错题 */
+    _initCamera () {
+      wepy.navigateTo({
+        url: `/pages/camera/index?id=${wepy.getStorageSync('gnb_high_user').textbookId}`
       })
     }
   }

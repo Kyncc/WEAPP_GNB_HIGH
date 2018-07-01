@@ -39,12 +39,6 @@
           <text>我的会员</text>
         </view>
       </view>
-      <view class="zan-font-16 zan-cell" bindtap="_into('/pages/my/version')" style="padding:5px 15px 15px">
-        <view class="zan-cell__bd">
-          <image src='../../common/resources/icon_version.png' style="width:28px;height:28px;position:relative;top:8px;margin-right:5px;" mode='scaleToFill'/>
-          <text>教材版本</text>
-        </view>
-      </view>
       <view class="zan-font-16 zan-cell" bindtap="_into('/pages/my/classes')" style="padding:5px 15px 15px">
         <view class="zan-cell__bd">
           <image src='../../common/resources/icon_class.png' style="width:28px;height:28px;position:relative;top:8px;margin-right:5px;" mode='scaleToFill'/>

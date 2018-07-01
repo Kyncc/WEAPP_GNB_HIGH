@@ -51,8 +51,7 @@ export default class extends wepy.app {
     pages: [
       'pages/workbook/index',
       'pages/init/entry',
-      'pages/camera/history',
-      'pages/camera/upload',
+      'pages/camera/index',
       'pages/my/index',
       'pages/my/vip',
       'pages/my/classes',
