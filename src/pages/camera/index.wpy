@@ -12,9 +12,12 @@
     <view class="zan-row zan-font-14" style="padding: 7px">选择章节</view>
     <view class="zan-panel" style="margin: 0">
       <repeat for="{{chapterList}}" key="index" index="index" item="item">
-        <view class="zan-row zan-cell">
-          <view class="zan-col zan-col-20" style="text-indent: 10px">{{item.name}}</view>
-          <view class="zan-col zan-col-4">{{item.name}}</view>
+        <view class="zan-row zan-cell" bindtap="_selectChapter({{index}})">
+          <view class="zan-col zan-col-22" style="text-indent: 10px">{{item.name}}</view>
+          <view class="zan-col zan-col-2">
+            <image wx:if="{{ index === select }}" style="height:25px;width:25px;position: relative;top:5px;" src="../../common/resources/icon_check.png"/>
+            <image wx:else style="height:25px;width:25px;position: relative;top:5px;" src="../../common/resources/icon_uncheck.png"/>
+          </view>
         </view>
       </repeat>
     </view>
@@ -39,10 +42,16 @@
 
     data = {
       file: [],
-      chapterList: []
+      chapterList: [],
+      select: ''
     }
 
     methods = {
+      /** 选择章节 */
+      _selectChapter (index) {
+        this.select = index
+        this.$apply()
+      },
       // 点击选择按钮
       _chooseImage (type) {
         let self = this
@@ -64,6 +73,13 @@
           wepy.showModal({
             title: '提示',
             content: '请上传正确的封面',
+            showCancel: false,
+            confirmText: '确定'
+          })
+        } else if (this.select) {
+          wepy.showModal({
+            title: '提示',
+            content: '请选择章节',
             showCancel: false,
             confirmText: '确定'
           })
