@@ -106,7 +106,7 @@
       wepy.showLoading({title: '请稍候'})
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/member/infoInit',
+          url: 'https://api.guinaben.com/member/infoInit',
           method: 'POST',
           data: {
             encryptedData: user.encryptedData,
@@ -130,7 +130,7 @@
       wepy.showLoading({title: '提交中'})
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/member/infoEdit',
+          url: 'https://api.guinaben.com/member/infoEdit',
           method: 'POST',
           data: {
             email: email
@@ -154,18 +154,18 @@
       let url = ''
       let options = {}
       if (type === 'statistics') {
-        url = 'https://small.guinaben.com/v2/textbook/statistics/download'
+        url = 'https://api.guinaben.com/textbook/statistics/download'
         options = {
           chapterId: id,
           type: this.$parent.globalData.statisticsSelect.toString()
         }
       } else if (type === 'workbook') {
-        url = 'https://small.guinaben.com/v2/workbook/chapter/errorDownload'
+        url = 'https://api.guinaben.com/workbook/chapter/errorDownload'
         options = {
           chapterId: id
         }
       } else {
-        url = 'https://small.guinaben.com/v2/resource/download/new/'
+        url = 'https://api.guinaben.com/resource/download/new/'
         options = {
           id: id,
           type: this.tag

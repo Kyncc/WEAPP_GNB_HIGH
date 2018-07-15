@@ -170,7 +170,7 @@
     _getPaper (id) {
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/resource/main',
+          url: 'https://api.guinaben.com/resource/main',
           data: {
             textbookId: id
           },
@@ -185,7 +185,7 @@
       wepy.showLoading({title: '请稍候'})
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/member/infoEdit',
+          url: 'https://api.guinaben.com/member/infoEdit',
           method: 'POST',
           data: {
             textbookId: id

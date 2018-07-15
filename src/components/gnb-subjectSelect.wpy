@@ -1,10 +1,13 @@
 <template>
  <view class="zan-row">
-    <repeat for="{{subjectList}}" key="index" index="index" item="item">
-      <button class="zan-col-offset-1 zan-col-5 zan-btn zan-btn--small {{activity === item.id ? 'zan-btn--primary':''}}" bindtap='_select(item.id)'>
+   2333
+   {{subjectList}}
+    <!-- <repeat for="{{subjectList}}" key="index" index="index" item="item">
+      {{item.name}}
+      <button class="zan-col-offset-1 zan-col-5 zan-btn zan-btn--small {{subject === item.id ? 'zan-btn--primary':''}}" bindtap='_select(item.id)'>
         {{item.name}}
       </button>
-    </repeat>
+    </repeat>-->
   </view>
 </template>
 
@@ -13,10 +16,12 @@ import wepy from 'wepy'
 
 export default class gnbSubjectSelect extends wepy.component {
   props = {
-    subjectList: {
-      type: Array
+    list: {
+      type: Array,
+      twoWay: true,
+      default: []
     },
-    activity: {
+    subject: {
       type: String,
       twoWay: true
     }
@@ -24,7 +29,7 @@ export default class gnbSubjectSelect extends wepy.component {
   methods = {
     /** 切换年级 */
     _select(id) {
-      this.activity = id
+      this.subject = id
       this.$emit('event', id)
     }
   }

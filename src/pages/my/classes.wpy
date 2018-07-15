@@ -17,7 +17,7 @@
           <codeField :options.sync="code" componentId="codeField"/>
         </view>
         <view class="zan-col zan-col-6 zan-col-offset-2" style="text-align: right">
-          <button open-type="getUserInfo" bindgetuserinfo="_save" class="zan-btn zan-btn--primary" size="mini" style="height:30px;margin:6px 6px 0 0;">确定</button>
+          <button open-type="getUserInfo" bindgetuserinfo="_save" class="zan-btn zan-btn--primary" size="mini" style="height:30px;margin:8px 6px 0 0;">确定</button>
         </view>
       </view>
     </view>
@@ -85,7 +85,7 @@
     _bindUser (user) {
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/member/infoInit',
+          url: 'https://api.guinaben.com/member/infoInit',
           method: 'POST',
           data: {
             encryptedData: user.encryptedData,
@@ -107,7 +107,7 @@
     _getClasses () {
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/member/school',
+          url: 'https://api.guinaben.com/school',
           data: {
           },
           success (res) { resolve(res) },
@@ -120,7 +120,7 @@
     _bindClass (code) {
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://small.guinaben.com/v2/member/addSchool',
+          url: 'https://api.guinaben.com/member/addSchool',
           method: 'POST',
           data: {
             code: code

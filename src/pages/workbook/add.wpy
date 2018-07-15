@@ -33,14 +33,8 @@
     <view class="search">
       <view class="zan-cell zan-row">
         <view class="zan-col zan-col-6 zan-font-14">版本选择：</view>
-        <view class="zan-col zan-col-8 picker">
-          <picker style="margin-top: 0" range="{{ subjectList }}" value="{{ subjectCurrent }}" range-key="name">
-            {{subjectCurrent}}
-            <view class="zan-arrow"></view>
-          </picker>
-        </view>
         <view class="zan-col zan-col-8 zan-col-offset-2 picker">
-          <picker style="margin-top: 0" range="{{ versionList }}" value="{{ versionCurrent }}" range-key="name">
+          <picker style="margin-top: 0" range="{{ versionList }}" value="{{ version }}" range-key="name">
             {{versionCurrent}}
             <view class="zan-arrow"></view>
           </picker>
@@ -103,26 +97,14 @@ export default class WorkbookAdd extends wepy.page {
 
   data = {
     workbookList: [],
-    inputShowed: false,
     inputVal: '',
     textbookId: '',
     base_search: {
-      title: '',
       value: '',
       placeholder: '请输入练习册名称'
     },
-    subjectCurrent: '2',
-    subjectList: [
-      {name: '数学', id: '2'},
-      {name: '语文', id: '5'},
-      {name: '英语', id: '7'}
-    ],
-    versionCurrent: '2',
-    versionList: [
-      {name: '数学', id: '2'},
-      {name: '语文', id: '5'},
-      {name: '英语', id: '7'}
-    ]
+    version: '',
+    versionList: []
   }
 
   events = {
@@ -156,7 +138,7 @@ export default class WorkbookAdd extends wepy.page {
     wepy.showNavigationBarLoading()
     return new Promise((resolve, reject) => {
       wepy.request({
-        url: 'https://small.guinaben.com/v2/workbook/edit',
+        url: 'https://api.guinaben.com/workbook',
         method: 'POST',
         data: {
           workbookId: id
@@ -178,7 +160,7 @@ export default class WorkbookAdd extends wepy.page {
   _getAllWorkbook (id, name) {
     return new Promise((resolve, reject) => {
       wepy.request({
-        url: 'https://small.guinaben.com/v2/workbook/all',
+        url: 'https://api.guinaben.com/workbook/all',
         data: {
           name: name,
           textbookId: id
@@ -196,6 +178,8 @@ export default class WorkbookAdd extends wepy.page {
   async onLoad (options) {
     this.textbookId = options.id
     this.workbookList = await this._getAllWorkbook(this.textbookId, this.base_search.value)
+    this.versionList = wepy.getStorageSync('gnb_high_user').version[options.subject]
+    this.version = wepy.getStorageSync('gnb_high_user').current.versionId
     this.$apply()
   }
 
