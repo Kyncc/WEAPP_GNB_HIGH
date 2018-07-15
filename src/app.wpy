@@ -58,7 +58,6 @@ export default class extends wepy.app {
       'pages/my/info',
       'pages/my/pay',
       'pages/my/email',
-      'pages/my/version',
       'pages/workbook/add',
       'pages/workbook/want',
       'pages/workbook/error',
@@ -66,11 +65,11 @@ export default class extends wepy.app {
       'pages/workbook/share',
       'pages/workbook/chapter',
       'pages/workbook/exercise',
-      'pages/paper/index',
-      'pages/paper/chengPin',
-      'pages/paper/fenCeng',
-      'pages/paper/zhuanTi',
-      'pages/paper/chengPinFilter',
+      'pages/resource/index',
+      'pages/resource/chengPin',
+      'pages/resource/fenCeng',
+      'pages/resource/zhuanTi',
+      'pages/resource/chengPinFilter',
       'pages/statistics/index',
       'pages/statistics/error',
       'pages/statistics/select',
@@ -93,9 +92,9 @@ export default class extends wepy.app {
         selectedIconPath: 'common/resources/workbook_select.png',
         text: '错题本'
       }, {
-        pagePath: 'pages/paper/index',
-        iconPath: 'common/resources/paper.png',
-        selectedIconPath: 'common/resources/paper_select.png',
+        pagePath: 'pages/resource/index',
+        iconPath: 'common/resources/resource.png',
+        selectedIconPath: 'common/resources/resource_select.png',
         text: '资源'
       }, {
         pagePath: 'pages/my/index',
@@ -118,7 +117,7 @@ export default class extends wepy.app {
 
   globalData = {
     system: {},
-    paperChengpinFilter: {
+    resourceChengpinFilter: {
       tag: 'hot',
       type: '0',
       year: '0'

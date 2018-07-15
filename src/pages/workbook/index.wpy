@@ -1,37 +1,16 @@
-<style lang="less" scoped>
-.workbookIndex {
-  .header{
-    height:85px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2;
-  }
-}
-.add_button {
-  position: fixed;
-  height: 100rpx;
-  width: 100rpx;
-  bottom: 5%;
-  right: 5%;
-}
-</style>
 <template>
   <view class="container workbookIndex">
     <!--科目教材切换-->
-    <view class="header">
-      <gnbTextbookSelect :value.sync="textbook" @event.user="textbookChange" :textbook.sync="textBookList"/>
-      <view style="overflow-x: scroll">
-        <repeat for="{{subjectList}}" key="index" index="index" item="item">
-          <button class="zan-btn zan-btn--small {{subject === item.id ? 'zan-btn--primary':''}}" bindtap='subjectChange({{item.id}})'>
-            {{item.name}}
-          </button>
-        </repeat>
+    <view class="header zan-row zan-font-14">
+      <view class="zan-col zan-col-12">
+        <gnbSubjectSelect :subject.sync="subject" :list.sync="subjectList" @event.user="subjectChange"/>
+      </view>
+      <view class="zan-col zan-col-12">
+        <gnbTextbookSelect :textbook.sync="textbook" :list.sync="textBookList" @event.user="textbookChange"/>
       </view>
     </view>
     <!--练习册区间-->
-    <view class="zan-panel" style='margin-top: 85px;'>
+    <view class="zan-panel" style='margin-top: 40px;'>
       <scroll>
         <repeat for="{{ workbookList }}" key="pindex" index="pindex" item="item">
           <view class="zan-card" bindtap="_intoChapter({{item}})">
@@ -98,6 +77,8 @@ export default class Statistics extends wepy.page {
     async subjectChange (subject) {
       let userinfo = await this._setUserInfoSubject(subject)
       wepy.setStorageSync('gnb_high_user', userinfo)
+      this.subject = subject
+      this.subjectList = wepy.getStorageSync('gnb_high_user').subject
       this.textbook = wepy.getStorageSync('gnb_high_user').current.textbookId
       this.textBookList = wepy.getStorageSync('gnb_high_user').textbook[this.subject]
       this.workbookList = await this._getMyWorkbook()
@@ -168,9 +149,6 @@ export default class Statistics extends wepy.page {
     return new Promise((resolve, reject) => {
       wepy.request({
         url: 'https://api.guinaben.com/workbook',
-        data: {
-          // textbookId: id
-        },
         success (res) {
           resolve(res)
         },
@@ -277,3 +255,23 @@ export default class Statistics extends wepy.page {
   }
 }
 </script>
+<style lang="less" scoped>
+.workbookIndex {
+  .header{
+    height:25px;
+    padding: 10px 0 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+}
+.add_button {
+  position: fixed;
+  height: 100rpx;
+  width: 100rpx;
+  bottom: 5%;
+  right: 5%;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <picker sclass="picker zan-c-gray-darker" bindchange="bindPickerChange" range="{{ list }}" value="{{ index }}" range-key="name">
+  <picker class="picker zan-c-gray-darker" bindchange="bindPickerChange" range="{{ list }}" value="{{ index }}" range-key="name">
     <view class="picker zan-c-gray-darker">
       {{list[index].name}}
       <view class="zan-arrow"></view>
@@ -10,9 +10,9 @@
 <script>
 import wepy from 'wepy'
 
-export default class gnbSubjectSelect extends wepy.component {
+export default class gnbVersionSelect extends wepy.component {
   props = {
-    subject: {
+    version: {
       type: String,
       twoWay: true
     },
@@ -28,7 +28,7 @@ export default class gnbSubjectSelect extends wepy.component {
   watch = {
     list (val) {
       this.list.forEach((item, index) => {
-        if (item.id.toString() === this.subject.toString()) {
+        if (item.id.toString() === this.version.toString()) {
           this.index = index
           this.$apply()
           return {}
@@ -45,6 +45,7 @@ export default class gnbSubjectSelect extends wepy.component {
   }
 }
 </script>
+
 <style lang="less">
 .picker{
   text-align: center;

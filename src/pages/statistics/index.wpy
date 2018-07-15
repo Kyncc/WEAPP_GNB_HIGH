@@ -1,16 +1,13 @@
-<style lang="less">
-.numberColor{
-  color: #FDCA3A;
-  text-align:center;
-}
-.zan-panel .zan-row:nth-child(even){
-  background-color: #EDF9F8;
-}
-</style>
-
 <template>
-  <view class="container">
-    <gnbTextbookSelect :value.sync="textbook" @event.user="textbookChange" :textbook.sync="textBookList"/>
+  <view class="container StatisticsIndex">
+     <view class="header zan-row zan-font-14">
+      <view class="zan-col zan-col-12">
+        <gnbSubjectSelect :subject.sync="subject" :list.sync="subjectList" @event.user="subjectChange"/>
+      </view>
+      <view class="zan-col zan-col-12">
+        <gnbTextbookSelect :textbook.sync="textbook" :list.sync="textBookList" @event.user="textbookChange"/>
+      </view>
+    </view>
     <view class="zan-panel">
       <view class="zan-row zan-cell">
         <view class="zan-col zan-col-6 zan-col-offset-6 zan-center">记题数</view>
@@ -32,6 +29,7 @@
 <script>
   import wepy from 'wepy'
   import gnbTextbookSelect from '@/components/gnb-textbookSelect'
+  import gnbSubjectSelect from '@/components/gnb-subjectSelect'
 
   export default class Statistics extends wepy.page {
     config = {
@@ -39,7 +37,8 @@
     }
 
     components = {
-      gnbTextbookSelect: gnbTextbookSelect
+      gnbTextbookSelect: gnbTextbookSelect,
+      gnbSubjectSelect: gnbSubjectSelect
     }
 
     data = {
@@ -64,11 +63,31 @@
           })
         }
       },
+      /** 教材切换 */
       async textbookChange (id) {
-        let userinfo = await this._setUserInfo(id)
-        wepy.setStorageSync('gnb_high_user', userinfo)
-        this.statistics = await this._getStatistics(id)
-        this.$apply()
+        try {
+          let userinfo = await this._setUserInfoTextbook(id, this.subject)
+          wepy.setStorageSync('gnb_high_user', userinfo)
+          this.statistics = await this._getStatistics()
+          this.$apply()
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      /** 科目切换 */
+      async subjectChange (subject) {
+        try {
+          let userinfo = await this._setUserInfoSubject(subject)
+          wepy.setStorageSync('gnb_high_user', userinfo)
+          this.subject = subject
+          this.subjectList = wepy.getStorageSync('gnb_high_user').subject
+          this.textbook = wepy.getStorageSync('gnb_high_user').current.textbookId
+          this.textBookList = wepy.getStorageSync('gnb_high_user').textbook[this.subject]
+          this.statistics = await this._getStatistics(this.textbook)
+          this.$apply()
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
 
@@ -121,7 +140,7 @@
     _getStatistics (id) {
       return new Promise((resolve, reject) => {
         wepy.request({
-          url: 'https://api.guinaben.com/resource',
+          url: 'https://api.guinaben.com/textbook/statistics',
           data: {
             textbookId: id
           },
@@ -149,3 +168,18 @@
     }
   }
 </script>
+<style lang="less">
+.StatisticsIndex{
+  .header{
+    height: 20px;
+    padding-top: 10px;
+  }
+}
+.numberColor{
+  color: #FDCA3A;
+  text-align:center;
+}
+.zan-panel .zan-row:nth-child(even){
+  background-color: #EDF9F8;
+}
+</style>
