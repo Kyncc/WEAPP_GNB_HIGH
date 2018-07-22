@@ -26,6 +26,17 @@ export default class gnbSubjectSelect extends wepy.component {
     index: 0
   }
   watch = {
+    subject (val) {
+      if (this.list.length) {
+        this.list.forEach((item, index) => {
+          if (item.id.toString() === val.toString()) {
+            this.index = index
+            this.$apply()
+            return {}
+          }
+        })
+      }
+    },
     list (val) {
       this.list.forEach((item, index) => {
         if (item.id.toString() === this.subject.toString()) {
@@ -39,6 +50,7 @@ export default class gnbSubjectSelect extends wepy.component {
   methods = {
     bindPickerChange (e) {
       this.index = e.detail.value
+      this.subject = this.list[this.index].id
       this.$emit('event', this.list[this.index].id)
       this.$apply()
     }
@@ -51,7 +63,6 @@ export default class gnbSubjectSelect extends wepy.component {
   .zan-arrow{
     position: static;
     rotate: 90deg;
-    top:25%;
   }
 }
 </style>

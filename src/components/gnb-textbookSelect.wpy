@@ -26,6 +26,17 @@ export default class gnbTextbookSelect extends wepy.component {
     index: 0
   }
   watch = {
+    textbook (val) {
+      if (this.list.length) {
+        this.list.forEach((item, index) => {
+          if (item.id.toString() === val.toString()) {
+            this.index = index
+            this.$apply()
+            return {}
+          }
+        })
+      }
+    },
     list (val) {
       this.list.forEach((item, index) => {
         if (item.id.toString() === this.textbook.toString()) {
@@ -39,6 +50,7 @@ export default class gnbTextbookSelect extends wepy.component {
   methods = {
     bindPickerChange (e) {
       this.index = e.detail.value
+      this.textbook = this.list[this.index].id
       this.$emit('event', this.list[this.index].id)
       this.$apply()
     }
@@ -50,9 +62,8 @@ export default class gnbTextbookSelect extends wepy.component {
 .picker{
   text-align: center;
   .zan-arrow{
-    position: static;
     rotate: 90deg;
-    top:25%;
+    margin-top: -10rpx;
   }
 }
 </style>

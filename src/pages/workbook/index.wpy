@@ -88,6 +88,7 @@ export default class Statistics extends wepy.page {
     async textbookChange (id) {
       let userinfo = await this._setUserInfoTextbook(id, this.subject)
       wepy.setStorageSync('gnb_high_user', userinfo)
+      this.textbook = id
       this.workbookList = await this._getMyWorkbook()
       this.$apply()
     },
@@ -239,6 +240,7 @@ export default class Statistics extends wepy.page {
       this.subjectList = wepy.getStorageSync('gnb_high_user').subject
       this.textbook = wepy.getStorageSync('gnb_high_user').current.textbookId
       this.textBookList = wepy.getStorageSync('gnb_high_user').textbook[this.subject]
+      this.$apply()
       this.workbookList = await this._getMyWorkbook()
       this.$apply()
     } catch (err) {

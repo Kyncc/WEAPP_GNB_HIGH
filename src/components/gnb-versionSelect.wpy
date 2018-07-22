@@ -26,9 +26,20 @@ export default class gnbVersionSelect extends wepy.component {
     index: 0
   }
   watch = {
+    version (val) {
+      if (this.list.length) {
+        this.list.forEach((item, index) => {
+          if (String(item.id) === String(val)) {
+            this.index = index
+            this.$apply()
+            return {}
+          }
+        })
+      }
+    },
     list (val) {
       this.list.forEach((item, index) => {
-        if (item.id.toString() === this.version.toString()) {
+        if (String(item.id) === String(this.version)) {
           this.index = index
           this.$apply()
           return {}
@@ -39,6 +50,7 @@ export default class gnbVersionSelect extends wepy.component {
   methods = {
     bindPickerChange (e) {
       this.index = e.detail.value
+      this.version = this.list[this.index].id
       this.$emit('event', this.list[this.index].id)
       this.$apply()
     }
@@ -52,7 +64,6 @@ export default class gnbVersionSelect extends wepy.component {
   .zan-arrow{
     position: static;
     rotate: 90deg;
-    top:25%;
   }
 }
 </style>
