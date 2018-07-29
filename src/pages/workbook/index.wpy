@@ -267,6 +267,7 @@ export default class Statistics extends wepy.page {
     top: 0;
     left: 0;
     z-index: 2;
+    background: #F9F9F9;
   }
 }
 .add_button {

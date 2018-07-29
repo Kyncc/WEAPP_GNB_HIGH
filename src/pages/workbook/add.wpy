@@ -154,7 +154,7 @@ export default class WorkbookAdd extends wepy.page {
       let userinfo = await this._setUserInfoVersion(version, this.subject)
       wepy.setStorageSync('gnb_high_user', userinfo)
       this.version = version
-      this.versionList = wepy.getStorageSync('gnb_high_user').versionId
+      this.versionList = wepy.getStorageSync('gnb_high_user').version
       this.textbook = wepy.getStorageSync('gnb_high_user').current.textbookId
       this.textBookList = wepy.getStorageSync('gnb_high_user').textbook[this.subject]
       this.workbookList = await this._getAllWorkbook(this.textbook, this.base_search.value)
@@ -165,7 +165,7 @@ export default class WorkbookAdd extends wepy.page {
       let userinfo = await this._setUserInfoTextbook(textbook, this.subject)
       wepy.setStorageSync('gnb_high_user', userinfo)
       this.textbook = textbook
-      this.workbookList = await this._getMyWorkbook()
+      this.workbookList = await this._getAllWorkbook(this.textbook, this.base_search.value)
       this.$apply()
     }
   }
