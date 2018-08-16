@@ -4,7 +4,8 @@
       <view class="zan-center">
         <image style="height:75px;width:90px;" src="../../common/resources/huangguan.png"/>
       </view>
-      <text class="zan-c-gray-dark zan-font-16">开通VIP，错题、试卷任你下</text>
+      <view class="zan-c-gray-dark zan-font-16" wx:if="vip">我的会员剩余天数：<text style="color:#FDCA3A">{{surplus}}</text>天</view>
+      <view class="zan-c-gray-dark zan-font-16" wx:else>我的会员，错题、试卷任你下</view>
     </view>
     <view class="zan-panel">
       <view class="zan-cell" bindtap="_buy(9)">
@@ -34,7 +35,12 @@ import wepy from 'wepy'
 
 export default class MyPay extends wepy.page {
   config = {
-    navigationBarTitleText: '开通VIP'
+    navigationBarTitleText: '我的会员'
+  }
+
+  data = {
+    vip: '',
+    surplus: ''
   }
 
   methods = {
@@ -116,6 +122,12 @@ export default class MyPay extends wepy.page {
         }
       })
     })
+  }
+
+  async onShow () {
+    this.vip = wepy.getStorageSync('gnb_high_user').vip
+    this.surplus = wepy.getStorageSync('gnb_high_user').surplus
+    this.$apply()
   }
 
   onShareAppMessage (res) {
