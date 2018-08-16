@@ -63,7 +63,7 @@
 
     methods = {
       _back () {
-        wepy.reLaunch({ url: `/pages/my/index` })
+        wepy.reLaunch({ url: `/pages/workbook/index` })
       }
     }
 
