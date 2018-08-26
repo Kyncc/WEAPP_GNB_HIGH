@@ -229,10 +229,10 @@ export default class Statistics extends wepy.page {
         * 2 获取openId
         * 3 在通过openId获得用户信息
         */
-      // if (wepy.getStorageSync('gnb_high_openId').length === 0) {
-      let code = await this._login()
-      await this._getOpenId(code)
-      // }
+      if (wepy.getStorageSync('gnb_high_openId').length === 0) {
+        let code = await this._login()
+        await this._getOpenId(code)
+      }
       let userInfo = await this._getUserInfo()
       wepy.setStorageSync('gnb_high_user', userInfo)
       // 当前学科
