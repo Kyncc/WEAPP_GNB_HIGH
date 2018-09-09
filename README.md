@@ -1,7 +1,7 @@
-# WEAPP_GNB_MIDDLE
+# WEAPP_GNB_HIGH
 > 小程序--高中错题归纳本
 
-![二维码](http://img.guinaben.com/WEAPP_GNB_MIDDLE.jpg)
+![二维码](http://img.guinaben.com/gh_7a93e2c2a202_430.jpg)
 
 ## JS框架
 -	[小程序组件化开发框架-WePY](https://tencent.github.io/wepy/document.html#/)
@@ -41,6 +41,7 @@ wepy build --watch
   ├── components  # 组件
   ├── pages       # 页面
     ├── init          # 初始化配置
+    ├── camera        # 拍错题
     ├── workbook      # 记错题
     ├── papaer        # 资源
     ├── statistics    # 错题本
